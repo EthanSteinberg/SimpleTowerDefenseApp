@@ -1,6 +1,13 @@
 package com.github.lalaland.simpletowerdefense;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
 
 public class TowerMap {
@@ -21,6 +28,8 @@ public class TowerMap {
     public final static int height = 15;
     public final static int width = 20;
     
+    public Rectangle boundingRect = new Rectangle(0, 0, 19.5f,14.5f);
+    
     int[] arena;
     
     int startX = 0;
@@ -30,6 +39,9 @@ public class TowerMap {
     int stopY = 0;
     
     Json j = new Json();
+    
+    IntMap<Tower> towers = new IntMap<Tower>();
+    List<Tower> towersList = new ArrayList<Tower>();
     
     public TowerMap() {
         arena = new int[width*height];
@@ -73,9 +85,48 @@ public class TowerMap {
         arena[y*width + x] = color;
     }
     
+    public void setTower(Tower t)
+    {
+    	towers.put(getIndex(t.getX(),t.getY()), t);
+    	towersList.add(t);
+    }
+    
+    public int getIndex(int x, int y)
+    {
+    	return y * width + x;
+    }
+   
+    
     public int getPos(int x, int y)
     {
         return arena[y*width + x];
+    }
+    
+    public Tower getTower(int x, int y)
+    {
+    	return towers.get(getIndex(x,y));
+    }
+    
+    boolean insideArena(int x, int y)
+    {
+    	return boundingRect.contains(x, y);
+    }
+    
+    boolean isGrass(int x, int y)
+    {
+    	return getPos(x,y) == 0;
+    }
+    
+    boolean noTower(int x, int y)
+    {
+    	return getTower(x, y) == null;
+    }
+    
+    public boolean validPlaceForTower(int x, int y)
+    {
+    	
+    	return insideArena(x,y) && isGrass(x,y) && noTower(x,y); 
+    
     }
     
     

@@ -1,11 +1,13 @@
 package com.github.lalaland.simpletowerdefense;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
 public class TowerScreen implements Screen {
@@ -21,16 +23,14 @@ public class TowerScreen implements Screen {
     
     
     SpriteBatch batch;
+    ShapeRenderer sRender;
     
 
     
-    TowerMap map;
     
     
-    EnemyManager e;
     
-    
-    HUD hud = new HUD();
+
     
     public TowerScreen(TowerGame g) {
         game = g;
@@ -38,6 +38,7 @@ public class TowerScreen implements Screen {
        
         render = new MapRenderer();
         batch = new SpriteBatch();
+        sRender = new ShapeRenderer();
         
  
 
@@ -45,14 +46,46 @@ public class TowerScreen implements Screen {
 
     @Override
     public void render(float delta) {
+    	
+    	
+    	
+    	
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         
-       if (map != null)
+       if (GameState.getInstance().isReady())
        {
+    	   GameState.getInstance().update(delta);
+    	   batch.setProjectionMatrix(render.camera.combined);
+
            render.render();
-           e.render(delta);
-           hud.render();
+           
+           
+           batch.begin();
+           GameState.getInstance().render(batch);
+           batch.end();
+           GameState.getInstance().hud.render();
+           
+    	   if (GameState.getInstance().creatingTower)
+    	   {
+    		   batch.begin();
+    		  
+    		   GameState.getInstance().towerToCreate.render(batch);
+    		   batch.end();
+    		   
+    		   if (GameState.getInstance().map.validPlaceForTower( GameState.getInstance().towerToCreate.x, GameState.getInstance().towerToCreate.y))
+    		   {
+    			   sRender.setProjectionMatrix(render.camera.combined);
+        		   GameState.getInstance().towerToCreate.renderAreaOfAttack(sRender);
+    		   }
+    		   else
+    		   {
+    			   sRender.setProjectionMatrix(render.camera.combined);
+        		   GameState.getInstance().towerToCreate.renderBadPlacement(sRender);
+    		   }
+    		   
+    		   
+    	   }
        }
        
        
@@ -75,9 +108,8 @@ public class TowerScreen implements Screen {
             
             @Override
             public void input(String text) {
-                map = new TowerMap(Gdx.files.local(text + ".json"));
-                render.setMap(map);
-                e = new EnemyManager(map);
+            	GameState.getInstance().init(new TowerMap(Gdx.files.local(text + ".json")));
+            	
                 
             }
             
@@ -86,7 +118,7 @@ public class TowerScreen implements Screen {
                 // TODO Auto-generated method stub
                 
             }
-        }, "FileName", "foo");
+        }, "FileName", "text");
 
     }
 
@@ -111,6 +143,8 @@ public class TowerScreen implements Screen {
     @Override
     public void dispose() {
         render.dispose();
+        batch.dispose();
+        sRender.dispose();
 
     }
     
@@ -119,7 +153,8 @@ public class TowerScreen implements Screen {
 
         @Override
         public boolean keyDown(int keycode) {
-            // TODO Auto-generated method stub
+            if (keycode == Keys.V)
+            	GameState.getInstance().enemies.addGuy();
             return false;
         }
 
@@ -140,7 +175,12 @@ public class TowerScreen implements Screen {
         	Vector3 touchPos = new Vector3(screenX,screenY,0);
             render.getCamera().unproject(touchPos);
             
-            hud.touchDown(touchPos.x, touchPos.y);
+           
+            
+            GameState.getInstance().touchDown(touchPos.x,touchPos.y);
+           
+            
+         
             return false;
         }
 
@@ -158,7 +198,14 @@ public class TowerScreen implements Screen {
 
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
-            // TODO Auto-generated method stub
+        	Vector3 touchPos = new Vector3(screenX,screenY,0);
+            render.getCamera().unproject(touchPos);
+            
+            if (GameState.getInstance().isReady() && GameState.getInstance().creatingTower)
+            {
+            	GameState.getInstance().towerToCreate.setPosition((int) Math.floor(touchPos.x),(int) Math.floor(touchPos.y));
+            }
+            
             return false;
         }
 

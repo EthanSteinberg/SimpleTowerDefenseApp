@@ -21,7 +21,7 @@ public class MapEditor implements Screen {
     
     int tileType = 0;
     
-    TowerMap map;
+ 
     
     
     public MapEditor(TowerGame g) {
@@ -47,7 +47,7 @@ public class MapEditor implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        if (map!= null)
+        if (GameState.getInstance().map!= null)
             render.render();
 
     }
@@ -66,15 +66,14 @@ public class MapEditor implements Screen {
             
             @Override
             public void input(String text) {
-                map = new TowerMap(Gdx.files.local(text + ".json"));
-                render.setMap(map);
+            	GameState.getInstance().map = new TowerMap(Gdx.files.local(text + ".json"));
                 
             }
             
             @Override
             public void canceled() {
-                map = new TowerMap();
-                render.setMap(map);
+            	GameState.getInstance().map = new TowerMap();
+             
                 
             }
         }, "FileName", "foo");
@@ -128,19 +127,19 @@ public class MapEditor implements Screen {
             Gdx.app.log("MyMessage", "This is it" + touchPos+ " " + screenX + ":" + screenY);
             
             
-            map.setPos((int) touchPos.x, (int) touchPos.y, tileType);
+            GameState.getInstance().map.setPos((int) touchPos.x, (int) touchPos.y, tileType);
             
             switch(starType)
             {
             case 0:
                 break;
             case 1:
-                map.startX = (int) touchPos.x;
-                map.startY = (int) touchPos.y;
+            	GameState.getInstance().map.startX = (int) touchPos.x;
+            	GameState.getInstance().map.startY = (int) touchPos.y;
                 break;
             case 2:
-                map.stopX = (int) touchPos.x;
-                map.stopY = (int) touchPos.y;
+            	GameState.getInstance().map.stopX = (int) touchPos.x;
+            	GameState.getInstance().map.stopY = (int) touchPos.y;
                 break;    
             }
             return false;
@@ -181,7 +180,7 @@ public class MapEditor implements Screen {
                     
                     @Override
                     public void input(String text) {
-                        map.save(Gdx.files.local(text + ".json"));
+                    	GameState.getInstance().map.save(Gdx.files.local(text + ".json"));
                         
                     }
                     

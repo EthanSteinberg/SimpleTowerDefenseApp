@@ -1,18 +1,8 @@
 package com.github.lalaland.simpletowerdefense;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class BasicTower extends Tower{
-
-	
-	public BasicTower()
-	{
-	}
-	
-
-	
-
+public class AoeTower extends Tower {
 
 	@Override
 	public float getTargetRadius() {
@@ -23,29 +13,19 @@ public class BasicTower extends Tower{
 	@Override
 	public Texture getTexture() {
 		// TODO Auto-generated method stub
-		return Resources.basicTower;
+		return Resources.aoeTower;
 	}
-
-
-
-
 
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 15;
 	}
-
-
-
-
 
 	@Override
 	public float getFireDelay() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 0;
 	}
 
-
-	
 }
