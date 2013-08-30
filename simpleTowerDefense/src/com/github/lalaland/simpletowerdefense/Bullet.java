@@ -13,6 +13,17 @@ public class Bullet {
 	final static float tolerance = .1f;
 	boolean dead = false;
 	
+	BulletType type;
+	
+	
+	public Bullet(float x, float y, Enemy target, BulletType type)
+	{
+		this.x = x;
+		this.y = y;
+		this.target=  target;
+		this.type = type;
+	}
+	
 	public void update(float time)
 	{
 		if (dead || target.isDead())
@@ -36,8 +47,8 @@ public class Bullet {
 		
 		if (hasHitTarget())
 		{
-			target.damage(25);
 			dead = true;
+			type.hitEnemy(target);
 		}
 		
 		
@@ -61,7 +72,7 @@ public class Bullet {
 		if (dead)
 			return; 
 		
-		batch.draw(Resources.bullet, x-.25f, y-.25f, .25f, .25f, .5f, .5f, 1, 1, getAngle() * 180/(float) Math.PI, 0, 0, 32,32, false, false);
+		batch.draw(type.getTexture(), x-.25f, y-.25f, .25f, .25f, .5f, .5f, 1, 1, getAngle() * 180/(float) Math.PI, 0, 0, 32,32, false, false);
 	}
 	
 	boolean isDead()

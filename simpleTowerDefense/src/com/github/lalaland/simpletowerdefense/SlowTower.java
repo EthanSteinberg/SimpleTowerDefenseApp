@@ -28,4 +28,10 @@ public class SlowTower extends Tower {
 		return 0;
 	}
 
+	@Override
+	public BulletType getBulletType() {
+		// TODO Auto-generated method stub
+		return new SlowBullet();
+	}
+
 }

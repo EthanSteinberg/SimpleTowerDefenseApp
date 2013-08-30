@@ -76,7 +76,7 @@ public abstract class Tower {
 	abstract public Texture getTexture();
 	abstract public int getCost();
 	abstract public float getFireDelay();
-	
+	abstract public BulletType getBulletType();
 	
 	public int getX()
 	{
@@ -107,7 +107,7 @@ public abstract class Tower {
 		
 		if (target != null)
 		{
-			GameState.getInstance().bullets.fireBullet(x, y, target);
+			GameState.getInstance().bullets.fireBullet(x, y, target,getBulletType());
 			lastFire = GameState.getInstance().clock.getTime();
 		}
 	}

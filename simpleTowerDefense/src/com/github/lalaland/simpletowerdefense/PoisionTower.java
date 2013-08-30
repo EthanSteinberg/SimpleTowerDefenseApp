@@ -25,7 +25,13 @@ public class PoisionTower extends Tower {
 	@Override
 	public float getFireDelay() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
+	}
+
+	@Override
+	public BulletType getBulletType() {
+		// TODO Auto-generated method stub
+		return new PoisonBullet();
 	}
 
 }

@@ -47,5 +47,15 @@ public class BasicTower extends Tower{
 	}
 
 
+
+
+
+	@Override
+	public BulletType getBulletType() {
+		// TODO Auto-generated method stub
+		return new BasicBullet();
+	}
+
+
 	
 }

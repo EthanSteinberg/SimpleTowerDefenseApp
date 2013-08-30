@@ -9,15 +9,13 @@ public class BulletManager {
 
 	List<Bullet> bullets = new ArrayList<Bullet>();
 	
-	public void fireBullet(float x, float y, Enemy target)
+	public void fireBullet(float x, float y, Enemy target,BulletType type)
 	{
 		
 		System.out.println("Bullet fired");
 		
-		Bullet b = new Bullet();
-		b.x = x;
-		b.y = y;
-		b.target = target;
+		Bullet b = new Bullet(x,y,target,type);
+
 		
 		bullets.add(b);
 	}

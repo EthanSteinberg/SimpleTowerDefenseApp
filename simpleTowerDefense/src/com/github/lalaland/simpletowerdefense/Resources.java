@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Resources {
 
 	
+	
 	public static void init()
 	{
 		basicTower = new Texture(Gdx.files.internal("tower/basicTower.png"));
@@ -25,7 +26,9 @@ public class Resources {
 		poisonTowerPressedPurchase = new Texture(Gdx.files.internal("tower/poisonTowerPurchasePressed.png"));
 		
 		
-		bullet = new Texture(Gdx.files.internal("bullet.png"));
+		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
+		poisonBullet = new Texture(Gdx.files.internal("poisonBullet.png"));
+		
 		dude = new Texture(Gdx.files.internal("dude.png"));
 		messageBox = new Texture(Gdx.files.internal("messageBox.png"));
 	}
@@ -48,7 +51,9 @@ public class Resources {
 	public static Texture poisonTowerPressedPurchase;
 	
 	
-	public static Texture bullet;
+	public static Texture basicBullet;
+	public static Texture poisonBullet;
+	
 	public static Texture dude;
 	public static Texture messageBox;
 }
