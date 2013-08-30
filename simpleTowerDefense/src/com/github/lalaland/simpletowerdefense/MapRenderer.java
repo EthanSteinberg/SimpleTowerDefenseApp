@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
+import com.github.lalaland.simpletowerdefense.towers.Tower;
 
 public class MapRenderer implements Disposable{
 
@@ -35,13 +36,13 @@ public class MapRenderer implements Disposable{
     public MapRenderer() {
         
         
-        green = new Texture(Gdx.files.internal("green.png"));
-        tan = new Texture(Gdx.files.internal("tan.png"));
-        yellow = new Texture(Gdx.files.internal("yellow.png"));
-        red = new Texture(Gdx.files.internal("red.png"));
+        green = new Texture(Gdx.files.internal("map/green.png"));
+        tan = new Texture(Gdx.files.internal("map/tan.png"));
+        yellow = new Texture(Gdx.files.internal("map/yellow.png"));
+        red = new Texture(Gdx.files.internal("map/red.png"));
         
-        startStar = new Texture(Gdx.files.internal("startStar.png"));
-        stopStar = new Texture(Gdx.files.internal("stopStar.png"));
+        startStar = new Texture(Gdx.files.internal("map/startStar.png"));
+        stopStar = new Texture(Gdx.files.internal("map/stopStar.png"));
         
         tileMap.put(0, green);
         tileMap.put(1, tan);

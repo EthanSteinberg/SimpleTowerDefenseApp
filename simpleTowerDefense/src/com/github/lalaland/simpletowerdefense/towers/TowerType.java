@@ -1,4 +1,4 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.towers;
 
 public enum TowerType {
 

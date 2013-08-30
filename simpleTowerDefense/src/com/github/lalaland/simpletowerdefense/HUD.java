@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.lalaland.simpletowerdefense.towers.TowerType;
 
 public class HUD {
 
@@ -25,13 +26,13 @@ public class HUD {
     
     ArrayList<HUDTower> hudTowers = new ArrayList<HUDTower>();
     
-    BitmapFont f = new BitmapFont(Gdx.files.internal("mono35ascii.fnt"),false);
+    BitmapFont f = new BitmapFont(Gdx.files.internal("HUD/mono35ascii.fnt"),false);
     public HUD()
     {
         camera.setToOrtho(false,25,15);
         textCamera.setToOrtho(false,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        lifeCounter = new Texture(Gdx.files.internal("lifeCounter.png"));
-        moneyCounter = new Texture(Gdx.files.internal("moneyCounter.png"));
+        lifeCounter = new Texture(Gdx.files.internal("HUD/lifeCounter.png"));
+        moneyCounter = new Texture(Gdx.files.internal("HUD/moneyCounter.png"));
         
         hudTowers.add(new HUDTower(TowerType.BASIC_TOWER, 0, 0));
         hudTowers.add(new HUDTower(TowerType.AOE_TOWER, 1, 0 ));

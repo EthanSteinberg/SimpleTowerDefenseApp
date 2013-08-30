@@ -1,14 +1,11 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.enemies;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.PriorityQueue;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.lalaland.simpletowerdefense.GameState;
 
 public class EnemyManager {
 
@@ -17,7 +14,7 @@ public class EnemyManager {
     
     ResultNode pathToTarget;
     
-    List<Enemy> currentEnemies = new ArrayList<Enemy>();
+    private List<Enemy> currentEnemies = new ArrayList<Enemy>();
     
     
     
@@ -37,12 +34,12 @@ public class EnemyManager {
         
     }
     
-    void addGuy()
+    public void addGuy()
     {
     	currentEnemies.add(new Enemy(pathToTarget));
     }
     
-    void render(SpriteBatch batch)
+    public void render(SpriteBatch batch)
     {
         
         
@@ -74,5 +71,13 @@ public class EnemyManager {
             }
         }
 		
+	}
+
+	public List<Enemy> getCurrentEnemies() {
+		return currentEnemies;
+	}
+
+	public void setCurrentEnemies(List<Enemy> currentEnemies) {
+		this.currentEnemies = currentEnemies;
 	}
 }

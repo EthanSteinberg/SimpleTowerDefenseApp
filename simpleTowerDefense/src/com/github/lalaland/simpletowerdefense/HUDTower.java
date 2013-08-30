@@ -3,6 +3,7 @@ package com.github.lalaland.simpletowerdefense;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.github.lalaland.simpletowerdefense.towers.TowerType;
 
 public class HUDTower {
 

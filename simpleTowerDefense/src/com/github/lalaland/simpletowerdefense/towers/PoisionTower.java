@@ -1,6 +1,9 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.towers;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.github.lalaland.simpletowerdefense.Resources;
+import com.github.lalaland.simpletowerdefense.bullets.BulletType;
+import com.github.lalaland.simpletowerdefense.bullets.PoisonBullet;
 
 public class PoisionTower extends Tower {
 

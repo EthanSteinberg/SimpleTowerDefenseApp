@@ -1,9 +1,11 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.enemies;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Set;
+
+import com.github.lalaland.simpletowerdefense.TowerMap;
 
 
 public class AStarSearch {

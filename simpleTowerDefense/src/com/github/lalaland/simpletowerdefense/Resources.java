@@ -26,11 +26,20 @@ public class Resources {
 		poisonTowerPressedPurchase = new Texture(Gdx.files.internal("tower/poisonTowerPurchasePressed.png"));
 		
 		
-		basicBullet = new Texture(Gdx.files.internal("basicBullet.png"));
-		poisonBullet = new Texture(Gdx.files.internal("poisonBullet.png"));
+		basicBullet = new Texture(Gdx.files.internal("bullet/basicBullet.png"));
+		poisonBullet = new Texture(Gdx.files.internal("bullet/poisonBullet.png"));
+		slowBullet = new Texture(Gdx.files.internal("bullet/slowBullet.png"));
+		aoeBullet = new Texture(Gdx.files.internal("bullet/aoeBullet2.png"));
 		
-		dude = new Texture(Gdx.files.internal("dude.png"));
-		messageBox = new Texture(Gdx.files.internal("messageBox.png"));
+		explosion = new Texture(Gdx.files.internal("bullet/explosion.png"));
+		
+		regularEnemy = new Texture(Gdx.files.internal("enemy/regularEnemy.png"));
+		regularEnemySlow = new Texture(Gdx.files.internal("enemy/regularEnemySlow.png"));
+		regularEnemyPoison = new Texture(Gdx.files.internal("enemy/regularEnemyPoison.png"));
+		regularEnemyPoisonSlow = new Texture(Gdx.files.internal("enemy/regularEnemyPoisonSlow.png"));
+		
+		
+		messageBox = new Texture(Gdx.files.internal("HUD/messageBox.png"));
 	}
 	
 	
@@ -53,7 +62,14 @@ public class Resources {
 	
 	public static Texture basicBullet;
 	public static Texture poisonBullet;
+	public static Texture slowBullet;
+	public static Texture aoeBullet;
 	
-	public static Texture dude;
+	public static Texture explosion;
+	
+	public static Texture regularEnemy;
+	public static Texture regularEnemySlow;
+	public static Texture regularEnemyPoison;
+	public static Texture regularEnemyPoisonSlow;
 	public static Texture messageBox;
 }

@@ -1,7 +1,9 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.enemies;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.github.lalaland.simpletowerdefense.TowerMap;
 
 public class Node implements Comparable<Node>{
 

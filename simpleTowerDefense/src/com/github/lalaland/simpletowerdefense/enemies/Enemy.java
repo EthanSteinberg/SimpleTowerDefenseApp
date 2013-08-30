@@ -1,22 +1,26 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.enemies;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.github.lalaland.simpletowerdefense.GameState;
+import com.github.lalaland.simpletowerdefense.Resources;
 
 public class Enemy {
     ResultNode lastPosition;
     float position;
 	public int positionsGoneThrough;
 	
-	private int health = 100;
+	private float health = 100;
 	
 	
 	boolean dead;
+	public int poisons;
+	public int slows;
+	public int explosions;
 	
 	public boolean isDead()
 	{
@@ -35,7 +39,9 @@ public class Enemy {
     	if (dead)
     		return;
     	
-        position+= time*3;
+        position+= time* 3/(slows+1);
+        
+        damage(poisons*10*time);
         
         if (position > 1)
         {
@@ -55,12 +61,12 @@ public class Enemy {
     
    
 
-	float getX()
+	public float getX()
     {
         return lastPosition.x + (lastPosition.next.x - lastPosition.x) * position;
     }
     
-    float getY()
+    public float getY()
     {
         return lastPosition.y + (lastPosition.next.y - lastPosition.y) * position;
     }
@@ -80,11 +86,25 @@ public class Enemy {
 		if (dead)
 			return;
 		
-		batch.draw(Resources.dude,getX(),getY(),1,1,0,1,1,0);
+		if (poisons>0 && slows>0)
+			batch.draw(Resources.regularEnemyPoisonSlow,getX(),getY(),1,1,0,1,1,0);
+		else if (poisons>0)
+			batch.draw(Resources.regularEnemyPoison,getX(),getY(),1,1,0,1,1,0);
+		else if (slows>0)
+			batch.draw(Resources.regularEnemySlow,getX(),getY(),1,1,0,1,1,0);
+		else
+			batch.draw(Resources.regularEnemy,getX(),getY(),1,1,0,1,1,0);
 		
+		
+		
+		batch.end();
+		
+		
+	
 		
 		ShapeRenderer render = new ShapeRenderer();
 		render.setProjectionMatrix(batch.getProjectionMatrix());
+		
 		
 		float greenWidth = health/100.0f;
 		
@@ -96,12 +116,22 @@ public class Enemy {
 		render.setColor(Color.GREEN);
 		render.rect(getX()+.05f, getY()-.125f, .9f * greenWidth, .05f);
 		
+		if (explosions>0)
+		{
+			render.setColor(1,0,0,.5f);
+			render.circle(getX()+.5f, getY() +.5f, 2);
+		
+		}
+		
 		render.end();
 		
+
+		
+		batch.begin();
 	}
 
-	public void damage(int i) {
-		health -= i;
+	public void damage(float f) {
+		health -= f;
 		if (health <= 0)
 		{
 			GameState.getInstance().money+=10;

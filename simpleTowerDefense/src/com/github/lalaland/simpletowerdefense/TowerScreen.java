@@ -73,7 +73,7 @@ public class TowerScreen implements Screen {
     		   GameState.getInstance().towerToCreate.render(batch);
     		   batch.end();
     		   
-    		   if (GameState.getInstance().map.validPlaceForTower( GameState.getInstance().towerToCreate.x, GameState.getInstance().towerToCreate.y))
+    		   if (GameState.getInstance().map.validPlaceForTower( GameState.getInstance().towerToCreate.getX(), GameState.getInstance().towerToCreate.getY()))
     		   {
     			   sRender.setProjectionMatrix(render.camera.combined);
         		   GameState.getInstance().towerToCreate.renderAreaOfAttack(sRender);

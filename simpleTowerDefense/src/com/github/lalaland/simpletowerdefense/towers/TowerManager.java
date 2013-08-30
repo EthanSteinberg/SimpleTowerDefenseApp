@@ -1,4 +1,4 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.towers;
 
 import java.util.ArrayList;
 import java.util.List;

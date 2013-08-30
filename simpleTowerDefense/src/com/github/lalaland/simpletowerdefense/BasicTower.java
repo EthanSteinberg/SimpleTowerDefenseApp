@@ -2,6 +2,9 @@ package com.github.lalaland.simpletowerdefense;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.lalaland.simpletowerdefense.bullets.BasicBullet;
+import com.github.lalaland.simpletowerdefense.bullets.BulletType;
+import com.github.lalaland.simpletowerdefense.towers.Tower;
 
 public class BasicTower extends Tower{
 

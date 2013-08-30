@@ -1,13 +1,19 @@
 package com.github.lalaland.simpletowerdefense;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.lalaland.simpletowerdefense.bullets.BulletManager;
+import com.github.lalaland.simpletowerdefense.effects.EffectManager;
+import com.github.lalaland.simpletowerdefense.enemies.EnemyManager;
+import com.github.lalaland.simpletowerdefense.towers.Tower;
+import com.github.lalaland.simpletowerdefense.towers.TowerManager;
+import com.github.lalaland.simpletowerdefense.towers.TowerType;
 
 public class GameState {
 
     
     
     int health = 10;
-    int money = 100;
+    public int money = 100;
      Tower towerToCreate = null;
      boolean creatingTower;
 	 HUDTower pressedHUD;
@@ -17,11 +23,13 @@ public class GameState {
 	public EnemyManager enemies;
 	public BulletManager bullets;
 	public TowerManager towers ;
+	public EffectManager effects;
 	public GameClock clock;
 	
 	public HUD hud;
 	
 	boolean ready = false;
+	
     
 	
 	public void startCreatingTower(HUDTower pressedHUD, TowerType type)
@@ -57,7 +65,7 @@ public class GameState {
 	
 	public void towerCreationTouch()
 	{
-		if (map.validPlaceForTower( towerToCreate.x, towerToCreate.y))
+		if (map.validPlaceForTower( towerToCreate.getX(), towerToCreate.getY()))
     	{
         	
         	finishCreatingTower();
@@ -79,6 +87,7 @@ public class GameState {
         enemies = new EnemyManager();
     	bullets = new BulletManager();
     	towers = new TowerManager();
+    	effects = new EffectManager();
     	clock = new GameClock();
     	hud = new HUD();
     	
@@ -100,15 +109,18 @@ public class GameState {
 		enemies.update(delta);
 		towers.update(delta);
 		bullets.update(delta);
+		effects.update(delta);
 		
 		
 	}
 	
 	public void render(SpriteBatch batch)
 	{
+		effects.render(batch);
 		enemies.render(batch);
 		towers.render(batch);
 		bullets.render(batch);
+		
 		
 	}
 

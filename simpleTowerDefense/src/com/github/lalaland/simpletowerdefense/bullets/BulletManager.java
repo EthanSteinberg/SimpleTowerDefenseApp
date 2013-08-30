@@ -1,9 +1,10 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.bullets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 public class BulletManager {
 

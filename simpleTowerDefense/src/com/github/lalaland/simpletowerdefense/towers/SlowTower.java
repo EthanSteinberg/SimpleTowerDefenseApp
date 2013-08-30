@@ -1,8 +1,11 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.towers;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.github.lalaland.simpletowerdefense.Resources;
+import com.github.lalaland.simpletowerdefense.bullets.BulletType;
+import com.github.lalaland.simpletowerdefense.bullets.SlowBullet;
 
-public class AoeTower extends Tower {
+public class SlowTower extends Tower {
 
 	@Override
 	public float getTargetRadius() {
@@ -13,25 +16,25 @@ public class AoeTower extends Tower {
 	@Override
 	public Texture getTexture() {
 		// TODO Auto-generated method stub
-		return Resources.aoeTower;
+		return Resources.slowTower;
 	}
 
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
-		return 15;
+		return 20;
 	}
 
 	@Override
 	public float getFireDelay() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public BulletType getBulletType() {
 		// TODO Auto-generated method stub
-		return new AoeBullet();
+		return new SlowBullet();
 	}
 
 }

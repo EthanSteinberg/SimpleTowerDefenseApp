@@ -1,4 +1,4 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.towers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.github.lalaland.simpletowerdefense.BasicTower;
+import com.github.lalaland.simpletowerdefense.GameState;
+import com.github.lalaland.simpletowerdefense.bullets.BulletType;
+import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 public abstract class Tower {
 
@@ -119,7 +123,7 @@ public abstract class Tower {
 			
 			Enemy farthest = null;
 			
-			for (Enemy e: GameState.getInstance().enemies.currentEnemies)
+			for (Enemy e: GameState.getInstance().enemies.getCurrentEnemies())
 			{
 				if ((x - e.getX()) * (x - e.getX()) + (y - e.getY()) * (y - e.getY()) < targetRadiusSquared)
 				{

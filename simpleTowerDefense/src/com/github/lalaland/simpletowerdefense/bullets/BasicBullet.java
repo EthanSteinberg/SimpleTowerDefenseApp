@@ -1,6 +1,8 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.bullets;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.github.lalaland.simpletowerdefense.Resources;
+import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 public class BasicBullet implements BulletType {
 

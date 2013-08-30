@@ -1,7 +1,8 @@
-package com.github.lalaland.simpletowerdefense;
+package com.github.lalaland.simpletowerdefense.bullets;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 public class Bullet {
 

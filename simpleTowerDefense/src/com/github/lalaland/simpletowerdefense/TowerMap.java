@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
+import com.github.lalaland.simpletowerdefense.towers.Tower;
 
 public class TowerMap {
     
@@ -32,11 +33,11 @@ public class TowerMap {
     
     int[] arena;
     
-    int startX = 0;
-    int startY = 0;
+    public int startX = 0;
+    public int startY = 0;
     
-    int stopX = 1;
-    int stopY = 0;
+    public int stopX = 1;
+    public int stopY = 0;
     
     Json j = new Json();
     
@@ -128,6 +129,8 @@ public class TowerMap {
     	return insideArena(x,y) && isGrass(x,y) && noTower(x,y); 
     
     }
+
+
     
     
 }
