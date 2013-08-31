@@ -4,18 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.Pool;
 import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 public class BulletManager {
 
-	List<Bullet> bullets = new ArrayList<Bullet>();
+	DelayedRemovalArray<Bullet> bullets = new DelayedRemovalArray(false,100);
+	
+	Pool<Bullet> bulletPool = new Pool<Bullet>()
+			{
+				@Override
+				protected Bullet newObject() {
+					// TODO Auto-generated method stub
+					return new Bullet();
+				}
+		
+			};
 	
 	public void fireBullet(float x, float y, Enemy target,BulletType type)
 	{
 		
-		System.out.println("Bullet fired");
-		
-		Bullet b = new Bullet(x,y,target,type);
+		Bullet b = bulletPool.obtain();
+		b.set(x,y,target,type);
 
 		
 		bullets.add(b);
@@ -23,8 +35,19 @@ public class BulletManager {
 	
 	public void update(float time)
 	{
-		for (Bullet b : bullets)
+		bullets.begin();
+		for (int i = 0; i < bullets.size; i++)
+		{
+			Bullet b = bullets.get(i);
 			b.update(time);
+			if (b.isDead())
+			{
+				bullets.removeIndex(i);
+				bulletPool.free(b);
+			}
+		}
+		bullets.end();
+			
 	}
 	
 	public void render(SpriteBatch batch)

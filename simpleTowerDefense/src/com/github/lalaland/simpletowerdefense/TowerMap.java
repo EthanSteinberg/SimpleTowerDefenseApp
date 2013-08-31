@@ -7,8 +7,11 @@ import java.util.List;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Json;
+import com.github.lalaland.simpletowerdefense.enemies.AStarSearch;
+import com.github.lalaland.simpletowerdefense.enemies.ResultNode;
 import com.github.lalaland.simpletowerdefense.towers.Tower;
 
 public class TowerMap {
@@ -42,11 +45,23 @@ public class TowerMap {
     Json j = new Json();
     
     IntMap<Tower> towers = new IntMap<Tower>();
-    List<Tower> towersList = new ArrayList<Tower>();
+
+    
+    ResultNode path = null;
     
     public TowerMap() {
         arena = new int[width*height];
         
+    }
+    
+    public ResultNode getPath()
+    {
+    	if (path == null)
+    	{
+    		AStarSearch enemyPath = new AStarSearch(this);
+    		path = enemyPath.getResult();
+    	}
+		return path;
     }
     
     public TowerMap(FileHandle loadFrom)
@@ -66,6 +81,8 @@ public class TowerMap {
         
         stopX = tmp.stopX;
         stopY = tmp.stopY;
+        
+        path = null;
     }
     
     public void save(FileHandle saveTo)
@@ -84,12 +101,14 @@ public class TowerMap {
     public void setPos(int x, int y, int color)
     {
         arena[y*width + x] = color;
+        
+        path = null;
     }
     
     public void setTower(Tower t)
     {
     	towers.put(getIndex(t.getX(),t.getY()), t);
-    	towersList.add(t);
+    	
     }
     
     public int getIndex(int x, int y)

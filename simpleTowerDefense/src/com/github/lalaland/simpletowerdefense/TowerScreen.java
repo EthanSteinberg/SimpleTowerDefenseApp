@@ -57,16 +57,17 @@ public class TowerScreen implements Screen {
        {
     	   GameState.getInstance().update(delta);
     	   batch.setProjectionMatrix(render.camera.combined);
+    	   sRender.setProjectionMatrix(render.camera.combined);
 
            render.render();
            
            
            batch.begin();
-           GameState.getInstance().render(batch);
+           GameState.getInstance().render(batch,sRender);
            batch.end();
            GameState.getInstance().hud.render();
            
-    	   if (GameState.getInstance().creatingTower)
+    	   if (GameState.getInstance().creatingTower && GameState.getInstance().mouseMoved)
     	   {
     		   batch.begin();
     		  
@@ -75,7 +76,7 @@ public class TowerScreen implements Screen {
     		   
     		   if (GameState.getInstance().map.validPlaceForTower( GameState.getInstance().towerToCreate.getX(), GameState.getInstance().towerToCreate.getY()))
     		   {
-    			   sRender.setProjectionMatrix(render.camera.combined);
+    			   
         		   GameState.getInstance().towerToCreate.renderAreaOfAttack(sRender);
     		   }
     		   else
@@ -108,7 +109,7 @@ public class TowerScreen implements Screen {
             
             @Override
             public void input(String text) {
-            	GameState.getInstance().init(new TowerMap(Gdx.files.local(text + ".json")));
+            	GameState.getInstance().init(new TowerMap(Gdx.files.internal(text + ".json")));
             	
                 
             }
@@ -154,7 +155,7 @@ public class TowerScreen implements Screen {
         @Override
         public boolean keyDown(int keycode) {
             if (keycode == Keys.V)
-            	GameState.getInstance().enemies.addGuy();
+            	GameState.getInstance().waves.executeWave();
             return false;
         }
 
@@ -170,9 +171,11 @@ public class TowerScreen implements Screen {
             return false;
         }
 
+        Vector3 touchPos = new Vector3();
+        
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        	Vector3 touchPos = new Vector3(screenX,screenY,0);
+        	touchPos.set(screenX,screenY,0);
             render.getCamera().unproject(touchPos);
             
            
@@ -198,11 +201,12 @@ public class TowerScreen implements Screen {
 
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
-        	Vector3 touchPos = new Vector3(screenX,screenY,0);
+        	touchPos.set(screenX,screenY,0);
             render.getCamera().unproject(touchPos);
             
             if (GameState.getInstance().isReady() && GameState.getInstance().creatingTower)
             {
+            	GameState.getInstance().mouseMoved = true;
             	GameState.getInstance().towerToCreate.setPosition((int) Math.floor(touchPos.x),(int) Math.floor(touchPos.y));
             }
             

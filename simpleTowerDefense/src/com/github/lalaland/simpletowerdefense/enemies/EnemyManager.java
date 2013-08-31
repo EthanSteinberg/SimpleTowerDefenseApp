@@ -5,27 +5,24 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.github.lalaland.simpletowerdefense.GameState;
 
 public class EnemyManager {
 
     
-    AStarSearch search;
+
     
-    ResultNode pathToTarget;
-    
-    private List<Enemy> currentEnemies = new ArrayList<Enemy>();
+    private DelayedRemovalArray<Enemy> currentEnemies = new DelayedRemovalArray<Enemy>();
     
     
     
     
     public EnemyManager() {
         
-        search = new AStarSearch(GameState.getInstance().map);
         
-        pathToTarget = search.getResult();
-        
-        currentEnemies.add(new Enemy(pathToTarget));
         
        
  
@@ -34,12 +31,17 @@ public class EnemyManager {
         
     }
     
-    public void addGuy()
+
+    
+    public void addGuys(int numberOfGuys)
     {
-    	currentEnemies.add(new Enemy(pathToTarget));
+    	for (int i = 0; i < numberOfGuys;i++)
+    	{
+    		currentEnemies.add(new Enemy(GameState.getInstance().map.getPath(),-i));
+    	}
     }
     
-    public void render(SpriteBatch batch)
+    public void render(SpriteBatch batch,ShapeRenderer sRender)
     {
         
         
@@ -47,7 +49,7 @@ public class EnemyManager {
         
         for (Enemy e: currentEnemies)
         {
-        	e.render(batch);
+        	e.render(batch,sRender);
             
  
         }
@@ -57,27 +59,27 @@ public class EnemyManager {
     }
 
 	public void update(float delta) {
-		Iterator<Enemy> it = currentEnemies.iterator();
-        while (it.hasNext())
+		currentEnemies.begin();
+        for (int i = 0;i < currentEnemies.size; i++)
         {
-            Enemy e = it.next();
+            Enemy e = currentEnemies.get(i);
             
             e.update(delta);
             
             if (e.isDead())
             {
-                it.remove();
+                currentEnemies.removeIndex(i);
                
             }
         }
+        
+        currentEnemies.end();
 		
 	}
 
-	public List<Enemy> getCurrentEnemies() {
+	public Array<Enemy> getCurrentEnemies() {
 		return currentEnemies;
 	}
 
-	public void setCurrentEnemies(List<Enemy> currentEnemies) {
-		this.currentEnemies = currentEnemies;
-	}
+	
 }

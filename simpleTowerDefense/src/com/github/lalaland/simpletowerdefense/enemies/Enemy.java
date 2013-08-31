@@ -27,9 +27,9 @@ public class Enemy {
 		return dead;
 	}
     
-    public Enemy(ResultNode startingPosition) {
+    public Enemy(ResultNode startingPosition,float startingPos) {
         lastPosition = startingPosition;
-        position = 0;
+        position = startingPos;
         positionsGoneThrough = 0;
     }
     
@@ -81,7 +81,7 @@ public class Enemy {
 		return positionsGoneThrough + position;
 	}
 
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, ShapeRenderer sRender) {
 		
 		if (dead)
 			return;
@@ -100,30 +100,25 @@ public class Enemy {
 		batch.end();
 		
 		
-	
-		
-		ShapeRenderer render = new ShapeRenderer();
-		render.setProjectionMatrix(batch.getProjectionMatrix());
-		
 		
 		float greenWidth = health/100.0f;
 		
-		render.begin(ShapeType.Filled);
-		render.setColor(Color.BLACK);
-		render.rect(getX(), getY()-.15f, 1, .1f);
-		render.setColor(Color.RED);
-		render.rect(getX()+.05f, getY()-.125f, .9f, .05f);
-		render.setColor(Color.GREEN);
-		render.rect(getX()+.05f, getY()-.125f, .9f * greenWidth, .05f);
+		sRender.begin(ShapeType.Filled);
+		sRender.setColor(Color.BLACK);
+		sRender.rect(getX(), getY()-.15f, 1, .1f);
+		sRender.setColor(Color.RED);
+		sRender.rect(getX()+.05f, getY()-.125f, .9f, .05f);
+		sRender.setColor(Color.GREEN);
+		sRender.rect(getX()+.05f, getY()-.125f, .9f * greenWidth, .05f);
 		
 		if (explosions>0)
 		{
-			render.setColor(1,0,0,.5f);
-			render.circle(getX()+.5f, getY() +.5f, 2);
+			sRender.setColor(1,0,0,.5f);
+			sRender.circle(getX()+.5f, getY() +.5f, 2);
 		
 		}
 		
-		render.end();
+		sRender.end();
 		
 
 		

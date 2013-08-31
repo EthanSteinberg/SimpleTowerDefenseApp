@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.github.lalaland.simpletowerdefense.towers.TowerType;
 
 public class HUD {
@@ -20,11 +23,14 @@ public class HUD {
     
     Texture lifeCounter;
     Texture moneyCounter;
+    Texture nextWaveButton;
     
     OrthographicCamera textCamera= new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     
     
-    ArrayList<HUDTower> hudTowers = new ArrayList<HUDTower>();
+    Rectangle nextWaveButtonRect = new Rectangle(20,12,5,1);
+    
+    Array<HUDTower> hudTowers = new Array<HUDTower>();
     
     BitmapFont f = new BitmapFont(Gdx.files.internal("HUD/mono35ascii.fnt"),false);
     public HUD()
@@ -33,6 +39,7 @@ public class HUD {
         textCamera.setToOrtho(false,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         lifeCounter = new Texture(Gdx.files.internal("HUD/lifeCounter.png"));
         moneyCounter = new Texture(Gdx.files.internal("HUD/moneyCounter.png"));
+        nextWaveButton = new Texture(Gdx.files.internal("HUD/nextWaveButton.png"));
         
         hudTowers.add(new HUDTower(TowerType.BASIC_TOWER, 0, 0));
         hudTowers.add(new HUDTower(TowerType.AOE_TOWER, 1, 0 ));
@@ -60,6 +67,11 @@ public class HUD {
     		hideMessage();
     		return true;
     	}
+    	else if (nextWaveButtonRect.contains(x, y))
+    	{
+    		GameState.getInstance().waves.executeWave();
+    		return true;
+    	}
     	
     	for (HUDTower tower: hudTowers)
     	{
@@ -71,6 +83,9 @@ public class HUD {
     	return false;
     }
     
+
+    StringBuilder temp = new StringBuilder();
+    
     public void render()
     {
         camera.update();
@@ -80,6 +95,7 @@ public class HUD {
         batch.draw(lifeCounter, 20, 14, 5, 1, 0, 1, 1, 0);
        
         batch.draw(moneyCounter,20,13,5,1,0,1,1,0);
+        batch.draw(nextWaveButton,20,12,5,1,0,1,1,0);
         
         for (HUDTower tower : hudTowers)
         	tower.render(batch);
@@ -96,8 +112,15 @@ public class HUD {
         batch.begin();
       
         f.setColor(0,0,1,1);
-        f.draw(batch, GameState.getInstance().health + "" ,Gdx.graphics.getWidth() * 24f/25, Gdx.graphics.getHeight() * 14.75f/15);
-        f.draw(batch, GameState.getInstance().money + "" ,Gdx.graphics.getWidth() * 24f/25, Gdx.graphics.getHeight() * 13.75f/15);
+        
+        temp.setLength(0);
+        temp.append(GameState.getInstance().health);
+        f.draw(batch, temp ,Gdx.graphics.getWidth() * 24f/25, Gdx.graphics.getHeight() * 14.75f/15);
+        
+        
+        temp.setLength(0);
+        temp.append(GameState.getInstance().money);
+        f.draw(batch, temp ,Gdx.graphics.getWidth() * 24f/25, Gdx.graphics.getHeight() * 13.75f/15);
         
         if (showingMessage)
         {

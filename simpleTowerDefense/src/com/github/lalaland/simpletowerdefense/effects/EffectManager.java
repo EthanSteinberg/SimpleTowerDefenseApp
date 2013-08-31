@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.github.lalaland.simpletowerdefense.enemies.Enemy;
 
 
 public class EffectManager {
 
-	List<Effect> effects = new ArrayList<Effect>();
+	DelayedRemovalArray<Effect> effects = new DelayedRemovalArray<Effect>();
 	
 	public void addEffect(Effect e)
 	{
@@ -18,19 +20,21 @@ public class EffectManager {
 	
 	public void update(float delta)
 	{
-		Iterator<Effect> it = effects.iterator();
-        while (it.hasNext())
+		effects.begin();
+        for (int i = 0;i < effects.size; i++)
         {
-        	Effect e = it.next();
+            Effect e = effects.get(i);
             
             e.update(delta);
             
             if (e.isDead())
             {
-                it.remove();
+            	effects.removeIndex(i);
                
             }
         }
+        
+        effects.end();
 	}
 
 	public void render(SpriteBatch batch) {

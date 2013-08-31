@@ -1,6 +1,7 @@
 package com.github.lalaland.simpletowerdefense;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.github.lalaland.simpletowerdefense.bullets.BulletManager;
 import com.github.lalaland.simpletowerdefense.effects.EffectManager;
 import com.github.lalaland.simpletowerdefense.enemies.EnemyManager;
@@ -24,11 +25,13 @@ public class GameState {
 	public BulletManager bullets;
 	public TowerManager towers ;
 	public EffectManager effects;
+	public WaveManager waves;
 	public GameClock clock;
 	
 	public HUD hud;
 	
 	boolean ready = false;
+	public boolean mouseMoved = false;
 	
     
 	
@@ -45,6 +48,7 @@ public class GameState {
 		pressedHUD = null;
 		towerToCreate = null;
 		creatingTower = false;
+		mouseMoved= false;
 	}
 	
 	public void finishCreatingTower()
@@ -59,6 +63,7 @@ public class GameState {
 		pressedHUD = null;
 		towerToCreate = null;
 		creatingTower = false;
+		mouseMoved = false;
 	}
 	
 
@@ -88,6 +93,7 @@ public class GameState {
     	bullets = new BulletManager();
     	towers = new TowerManager();
     	effects = new EffectManager();
+    	waves = new WaveManager();
     	clock = new GameClock();
     	hud = new HUD();
     	
@@ -114,10 +120,10 @@ public class GameState {
 		
 	}
 	
-	public void render(SpriteBatch batch)
+	public void render(SpriteBatch batch,ShapeRenderer sRender)
 	{
 		effects.render(batch);
-		enemies.render(batch);
+		enemies.render(batch,sRender);
 		towers.render(batch);
 		bullets.render(batch);
 		
@@ -131,6 +137,7 @@ public class GameState {
 		
 		if (creatingTower)
         {
+			towerToCreate.setPosition((int) Math.floor(x),(int) Math.floor(y));
 			towerCreationTouch();
         }
 		

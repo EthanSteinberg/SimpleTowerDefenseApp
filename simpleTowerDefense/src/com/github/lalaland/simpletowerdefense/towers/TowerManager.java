@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
 public class TowerManager {
+	
+	Array<Tower> towers = new Array<Tower>(false,10);
 
-	List<Tower> towers = new ArrayList<Tower>();
 	
 	public void update(float time)
 	{

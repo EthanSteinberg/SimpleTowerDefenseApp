@@ -26,7 +26,7 @@ public class HUDTower {
 	
 	float getY()
 	{
-		return 10.75f - y*2.5f;
+		return 9.75f - y*2.5f;
 	}
 	
 	float getX()

@@ -8,23 +8,31 @@ public class Bullet {
 
 	float x;
 	float y;
-	
-	final static float vel = 5;
 	Enemy target;
-	final static float tolerance = .1f;
 	boolean dead = false;
-	
 	BulletType type;
 	
+	final static float vel = 5;
 	
-	public Bullet(float x, float y, Enemy target, BulletType type)
+	final static float tolerance = .1f;
+	
+	final static Rectangle tempRect = new Rectangle(); // WARNING, NOT THREAD SAFE
+	
+	
+	
+	
+	public void set(float x, float y, Enemy target, BulletType type)
 	{
 		this.x = x;
 		this.y = y;
 		this.target=  target;
 		this.type = type;
+		this.dead = false;
 	}
 	
+	public Bullet() {
+	}
+
 	public void update(float time)
 	{
 		if (dead || target.isDead())
@@ -57,8 +65,8 @@ public class Bullet {
 	
 	boolean hasHitTarget()
 	{
-		Rectangle targetRect = new Rectangle(target.getX(),target.getY(),1,1);
-		return targetRect.contains(x, y);
+		tempRect.set(target.getX(),target.getY(),1,1);
+		return tempRect.contains(x, y);
 	}
 	
 	float getAngle()

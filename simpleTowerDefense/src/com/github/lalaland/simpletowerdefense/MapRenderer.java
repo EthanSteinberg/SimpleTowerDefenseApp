@@ -18,8 +18,7 @@ public class MapRenderer implements Disposable{
     
     OrthographicCamera camera;
     SpriteBatch batch;
-    
-    
+    ShapeRenderer sRender;
     
     
     Texture green;
@@ -56,6 +55,7 @@ public class MapRenderer implements Disposable{
         
         
         batch = new SpriteBatch();
+        sRender = new ShapeRenderer();
         
     }
     
@@ -75,8 +75,8 @@ public class MapRenderer implements Disposable{
         
         batch.begin();
        
-        ShapeRenderer sRender = new ShapeRenderer();
-        sRender.setProjectionMatrix(camera.combined);
+        
+        
         
         
         for (int y = 0;y<TowerMap.height; y++)
@@ -110,6 +110,9 @@ public class MapRenderer implements Disposable{
         batch.draw(stopStar, GameState.getInstance().map.stopX, GameState.getInstance().map.stopY, 1,1,0,1,1,0);
         
         batch.end();
+        
+        
+        sRender.setProjectionMatrix(camera.combined);
         
         for (int y = 0;y<TowerMap.height; y++)
             for (int x = 0; x < TowerMap.width; x++)
